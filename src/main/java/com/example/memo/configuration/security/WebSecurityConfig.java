@@ -9,7 +9,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -19,7 +18,6 @@ import org.springframework.security.web.SecurityFilterChain;
 @RequiredArgsConstructor
 public class WebSecurityConfig {
 
-	private final UserDetailsService userDetailsService;
 	private final AuthenticationConfiguration authenticationConfiguration;
 
 	@Bean
@@ -50,7 +48,7 @@ public class WebSecurityConfig {
 				SessionCreationPolicy.STATELESS))
 			.authorizeHttpRequests(httpRequests -> httpRequests
 				.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-				.requestMatchers("/api/members/**").permitAll()
+				.requestMatchers("/api/login").permitAll()
 				.anyRequest().authenticated());
 
 		return httpSecurity.build();

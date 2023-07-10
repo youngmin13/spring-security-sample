@@ -4,6 +4,8 @@ import com.example.memo.domain.entity.Member;
 import com.example.memo.domain.model.AuthorizedMember;
 import com.example.memo.dto.LoginRequest;
 import com.example.memo.dto.MemberInfo;
+import com.example.memo.service.MemberService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,11 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class MemberController {
+
+	private final MemberService memberService;
 
 	@PostMapping("/login")
 	public String login(@RequestBody LoginRequest loginRequest) {
-		return null;
+		return memberService.login(loginRequest);
 	}
 
 	@GetMapping("/member-info")
