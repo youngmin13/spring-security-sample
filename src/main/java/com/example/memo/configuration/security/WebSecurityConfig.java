@@ -40,7 +40,6 @@ public class WebSecurityConfig {
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity
-			.httpBasic(AbstractHttpConfigurer::disable)
 			.csrf(AbstractHttpConfigurer::disable)
 			.addFilter(jwtAuthenticationFilter())
 			.addFilterAfter(jwtAuthorizationFilter(), JwtAuthenticationFilter.class)
@@ -48,7 +47,7 @@ public class WebSecurityConfig {
 				SessionCreationPolicy.STATELESS))
 			.authorizeHttpRequests(httpRequests -> httpRequests
 				.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-				.requestMatchers("/api/login").permitAll()
+				.requestMatchers("/member").permitAll()
 				.anyRequest().authenticated());
 
 		return httpSecurity.build();
