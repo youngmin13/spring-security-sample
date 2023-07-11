@@ -8,7 +8,7 @@ custom annotation을 활용해서 authorizedMember.getMember()와 같이 중복 
 
 * ### JwtAuthenticationFilter.successfulAuthentication() 구현
 
-올바른 인증 요청에 대한 결과로 jwt token 만들고, 검증한 후에 201 response로 해당 token 세팅합니다.
+올바른 인증 요청에 대한 결과로 jwt token 만들고, 검증한 후에 201 response로 해당 token을 Response body에 세팅합니다.
 
 * ### JwtAuthorizationFilter 구현
 
