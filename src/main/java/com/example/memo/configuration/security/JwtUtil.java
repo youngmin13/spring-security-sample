@@ -9,11 +9,9 @@ import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
 import java.security.Key;
-import java.util.Base64;
 import java.util.Date;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.StringUtils;
 
 @Slf4j
@@ -26,15 +24,8 @@ public class JwtUtil {
 	private final int VALUE_INDEX = 7;
 	private final long TOKEN_DURATION = 60 * 60 * 1000L; // 60분
 
-	@Value("${jwt.secret.key}")
-	private String secretKey;
-	private Key key;
 	private final SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
-
-	static {
-		byte[] bytes = Base64.getDecoder().decode(secretKey);
-		key = Keys.hmacShaKeyFor(bytes);
-	}
+	private final Key key = Keys.secretKeyFor(signatureAlgorithm);
 
 	public String createToken(String username) {
 		Date now = new Date();

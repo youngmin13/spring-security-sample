@@ -4,7 +4,10 @@ import com.example.memo.configuration.security.JwtUtil;
 import com.example.memo.domain.entity.Member;
 import com.example.memo.domain.model.AuthorizedMember;
 import com.example.memo.dto.LoginRequest;
+import com.example.memo.dto.SignupRequest;
 import com.example.memo.repository.MemberRepository;
+import java.time.LocalDateTime;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,6 +30,14 @@ public class MemberService implements UserDetailsService {
 			throw new UsernameNotFoundException(email);
 		}
 		return new AuthorizedMember(member);
+	}
+
+	public void signup(SignupRequest signupRequest) {
+		Member member = new Member(signupRequest.email(), signupRequest.name(),
+			passwordEncoder.encode(signupRequest.password()), Set.of("ROLE_MEMBER"),
+			LocalDateTime.now());
+
+		memberRepository.save(member);
 	}
 
 	public String login(LoginRequest loginRequest) {
