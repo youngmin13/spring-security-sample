@@ -1,5 +1,6 @@
 package com.example.memo.controller.api;
 
+import com.example.memo.custom.CustomMemberInfo;
 import com.example.memo.domain.entity.Member;
 import com.example.memo.domain.model.AuthorizedMember;
 import com.example.memo.dto.LoginRequest;
@@ -34,13 +35,12 @@ public class MemberController {
 	}
 
 	@GetMapping("")
-	public ResponseEntity<MemberInfo> getMemberInfo(@AuthenticationPrincipal AuthorizedMember authorizedMember) {
-		if (authorizedMember == null) {
+	public ResponseEntity<MemberInfo> getMemberInfo(@CustomMemberInfo Member member) {
+		if (member == null) {
 			return ResponseEntity.badRequest().build();
 		}
-
 		// TODO : authorizedMember.getMember()와 같은 중복 개념 접근 개선하기
-		Member member = authorizedMember.getMember();
+//		Member member = authorizedMember.getMember();
 		return ResponseEntity.ok(new MemberInfo(member.getEmail(), member.getName(), member.getRoles()));
 	}
 }
